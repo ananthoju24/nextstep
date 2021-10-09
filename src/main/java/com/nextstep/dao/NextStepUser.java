@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
 @Data
-@Document("nextstepusers")
+@Document("user")
 public class NextStepUser implements Serializable {
 
 	private static final long serialVersionUID = -2015499243679468457L;

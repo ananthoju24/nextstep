@@ -10,6 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.nextstep.dao.NextStepDaoService;
 import com.nextstep.dao.NextStepUser;
+import com.nextstep.repo.CollegeRepository;
 import com.nextstep.repo.UserRespository;
 
 @SpringBootTest
@@ -18,23 +19,52 @@ public class NextStepDaoServiceTest {
 	@Autowired
 	private NextStepDaoService daoService;
 
-	@MockBean
+	//@MockBean
+	@Autowired
 	private UserRespository userRespository;
+	
+	
+	private CollegeRepository collegeRepo;
 
 	@Test
 	public void testRegisterUser() {
-		NextStepUser nextStepUser = new NextStepUser();
-		nextStepUser.setUserId("arun24");
-		nextStepUser.setMobileNo("8019692761");
-		assertEquals(0, daoService.registerUser(nextStepUser));
+		/*
+		 * NextStepUser nextStepUser = new NextStepUser();
+		 * nextStepUser.setUserId("arun24"); nextStepUser.setMobileNo("8019692761");
+		 */
+		NextStepUser nextStepUser1 = new NextStepUser();
+		nextStepUser1.setUserId("sri");
+		nextStepUser1.setMobileNo("8977145141");
+		NextStepUser nextStepUser2 = new NextStepUser();
+		nextStepUser2.setUserId("siri");
+		nextStepUser2.setMobileNo("8019692762");
+		nextStepUser2.setEmailId("arun23@yopmail.com");
+		//assertEquals(0, daoService.registerUser(nextStepUser));
+		assertEquals(0, daoService.registerUser(nextStepUser1));
+		assertEquals(0, daoService.registerUser(nextStepUser2));
 	}
 
 	@Test
 	public void findByMobileNo() {
 		NextStepUser nextStepUser = new NextStepUser();
-		nextStepUser.setUserId("arun24");
-		nextStepUser.setMobileNo("8019692761");
-		Mockito.when(userRespository.findByMobileNo("8019692761")).thenReturn(nextStepUser);
-		assertEquals("arun24", daoService.findByMobileNo("8019692761").getUserId());
+		nextStepUser.setUserId("sri");
+		nextStepUser.setMobileNo("8977145141");
+		Mockito.when(userRespository.findByMobileNo("8977145141")).thenReturn(nextStepUser);
+		assertEquals("sri", daoService.findByMobileNo("8977145141").getUserId());
 	}
+
+	@Test
+	public void findByMobileNoOrEmailid() {
+		NextStepUser nextStepUser = new NextStepUser();
+		nextStepUser.setUserId("siri");
+		nextStepUser.setMobileNo("8019692762");
+		nextStepUser.setEmailId("arun23@yopmail.com");
+		Mockito.when(daoService.findByMobileNoOrEmailId("8019692762")).thenReturn(nextStepUser);
+		Mockito.when(daoService.findByMobileNoOrEmailId("arun24@yopmail.com")).thenReturn(nextStepUser);
+		assertEquals("siri", daoService.findByMobileNoOrEmailId("8019692762").getUserId());
+		assertEquals("siri", daoService.findByMobileNoOrEmailId("arun24@yopmail.com").getUserId());
+
+	}
+	
+
 }

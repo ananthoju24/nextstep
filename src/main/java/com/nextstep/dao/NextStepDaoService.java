@@ -42,4 +42,19 @@ public class NextStepDaoService {
 		}
 		return nextStepUser;
 	}
+
+	public NextStepUser findByMobileNoOrEmailId(String input) {
+		NextStepUser nextStepUser = null;
+		try {
+			log.info("findByMobileNoOrEmailId :: " + input);
+			if (input == null || input.isEmpty())
+				return nextStepUser;
+			nextStepUser = userRespository.findByMobileNo(input);
+			log.info("findByMobileNoOrEmailId :: success " + nextStepUser);
+		} catch (Exception e) {
+			log.error("findByMobileNoOrEmailId :: error ", e);
+		}
+		return nextStepUser;
+
+	}
 }
