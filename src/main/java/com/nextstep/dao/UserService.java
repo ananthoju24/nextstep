@@ -2,6 +2,7 @@ package com.nextstep.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +20,19 @@ public class UserService {
 		int result = 0;
 		try {
 			log.info("registerUser :: " + nextStepUser);
-			if (nextStepUser == null)
+			if (nextStepUser == null || nextStepUser.getUserId() == null || nextStepUser.getUserId().isEmpty()
+					|| nextStepUser.getEmailId() == null || nextStepUser.getEmailId().isEmpty()) {
 				return result;
-			userRespository.save(nextStepUser);
+			}
+
+			NextStepUser user = userRespository.findByMobileNoOrEmailId(
+					(nextStepUser.getUserId() != null) ? nextStepUser.getUserId() : nextStepUser.getEmailId());
+			if (user == null)
+				userRespository.save(nextStepUser);
+			else {
+				BeanUtils.copyProperties(nextStepUser, user);
+				userRespository.save(user);
+			}
 			log.info("registerUser :: success");
 		} catch (Exception e) {
 			log.error("registerUser :: error ", e);

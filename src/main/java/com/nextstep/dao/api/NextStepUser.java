@@ -1,8 +1,11 @@
 package com.nextstep.dao.api;
 
 import java.io.Serializable;
+import java.sql.Date;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
@@ -27,5 +30,8 @@ public class NextStepUser implements Serializable {
 	private String higestEdQualification;
 	private String collegeName;
 	private String profession;
-	
+	@CreatedDate
+	private Date createdDate;
+	@LastModifiedDate
+	private Date updatedDate;
 }

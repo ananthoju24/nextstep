@@ -13,5 +13,5 @@ public interface UserRespository extends MongoRepository<NextStepUser, String> {
 	public NextStepUser findByMobileNo(String mobileNo);
 	
 	public NextStepUser findByMobileNoOrEmailId(String input);
-
+	
 }
