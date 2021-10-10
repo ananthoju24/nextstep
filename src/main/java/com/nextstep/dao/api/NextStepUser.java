@@ -1,4 +1,4 @@
-package com.nextstep.dao;
+package com.nextstep.dao.api;
 
 import java.io.Serializable;
 

@@ -1,6 +1,7 @@
 package com.nextstep;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -8,10 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import com.nextstep.dao.CollegeRepository;
 import com.nextstep.dao.NextStepDaoService;
-import com.nextstep.dao.NextStepUser;
-import com.nextstep.repo.CollegeRepository;
-import com.nextstep.repo.UserRespository;
+import com.nextstep.dao.UserRespository;
+import com.nextstep.dao.api.CollegeDetails;
+import com.nextstep.dao.api.NextStepUser;
 
 @SpringBootTest
 public class NextStepDaoServiceTest {
@@ -19,11 +21,11 @@ public class NextStepDaoServiceTest {
 	@Autowired
 	private NextStepDaoService daoService;
 
-	//@MockBean
+	// @MockBean
 	@Autowired
 	private UserRespository userRespository;
-	
-	
+
+	@Autowired
 	private CollegeRepository collegeRepo;
 
 	@Test
@@ -39,7 +41,7 @@ public class NextStepDaoServiceTest {
 		nextStepUser2.setUserId("siri");
 		nextStepUser2.setMobileNo("8019692762");
 		nextStepUser2.setEmailId("arun23@yopmail.com");
-		//assertEquals(0, daoService.registerUser(nextStepUser));
+		// assertEquals(0, daoService.registerUser(nextStepUser));
 		assertEquals(0, daoService.registerUser(nextStepUser1));
 		assertEquals(0, daoService.registerUser(nextStepUser2));
 	}
@@ -65,6 +67,16 @@ public class NextStepDaoServiceTest {
 		assertEquals("siri", daoService.findByMobileNoOrEmailId("arun24@yopmail.com").getUserId());
 
 	}
-	
 
+	@Test
+	public void saveCollege() {
+		CollegeDetails collegeDetails = new CollegeDetails();
+		collegeDetails.setName("CBIT");
+		collegeDetails.setContactNo("91-9000000000");
+		collegeDetails.setCity("Rajendranagar");
+		collegeDetails.setState("Telangana");
+		collegeDetails.setCountry("India");
+		collegeDetails.setAddress("Near gandipet");
+		assertNotNull(collegeRepo.save(collegeDetails));
+	}
 }

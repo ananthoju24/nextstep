@@ -1,9 +1,9 @@
-package com.nextstep.repo;
+package com.nextstep.dao;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
-import com.nextstep.dao.NextStepUser;
+import com.nextstep.dao.api.NextStepUser;
 
 @Repository
 public interface UserRespository extends MongoRepository<NextStepUser, String> {
