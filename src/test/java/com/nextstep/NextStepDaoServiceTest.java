@@ -9,24 +9,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.nextstep.dao.CollegeRepository;
-import com.nextstep.dao.NextStepDaoService;
+import com.nextstep.dao.CollegeService;
+import com.nextstep.dao.ReviewService;
 import com.nextstep.dao.UserRespository;
+import com.nextstep.dao.UserService;
 import com.nextstep.dao.api.CollegeDetails;
 import com.nextstep.dao.api.NextStepUser;
+import com.nextstep.dao.api.ReviewDetails;
 
 @SpringBootTest
 public class NextStepDaoServiceTest {
 
 	@Autowired
-	private NextStepDaoService daoService;
+	private UserService daoService;
+	@Autowired
+	private CollegeService collegeService;
+	@Autowired
+	private ReviewService reviewService;
 
 	// @MockBean
 	@Autowired
 	private UserRespository userRespository;
 
-	@Autowired
-	private CollegeRepository collegeRepo;
 
 	@Test
 	public void testRegisterUser() {
@@ -68,7 +72,7 @@ public class NextStepDaoServiceTest {
 
 	}
 
-	@Test
+	//@Test
 	public void saveCollege() {
 		CollegeDetails collegeDetails = new CollegeDetails();
 		collegeDetails.setName("CBIT");
@@ -77,6 +81,17 @@ public class NextStepDaoServiceTest {
 		collegeDetails.setState("Telangana");
 		collegeDetails.setCountry("India");
 		collegeDetails.setAddress("Near gandipet");
-		assertNotNull(collegeRepo.save(collegeDetails));
+		assertNotNull(collegeService.saveCollege(collegeDetails));
+	}
+
+	@Test
+	public void testReview() {
+		CollegeDetails collegeDetails  = collegeService.findCollegeByName("CBIT");
+		ReviewDetails reviewDetails = new ReviewDetails();
+		reviewDetails.setCollegeId(collegeDetails.getId());
+		reviewDetails.setRating(5);
+		reviewDetails.setReview("One of the best college in top 10 in Telagana. Will have good placements");
+		reviewDetails.setUserId("siri");
+		assertNotNull(reviewService.saveReview(reviewDetails));
 	}
 }

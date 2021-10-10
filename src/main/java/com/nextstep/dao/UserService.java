@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 import com.nextstep.dao.api.NextStepUser;
 
 @Service
-public class NextStepDaoService {
+public class UserService {
+
+	private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
 	@Autowired
 	private UserRespository userRespository;
-	private static final Logger log = LoggerFactory.getLogger(NextStepDaoService.class);
 
 	public int registerUser(NextStepUser nextStepUser) {
 		int result = 0;
@@ -57,4 +58,5 @@ public class NextStepDaoService {
 		return nextStepUser;
 
 	}
+
 }
